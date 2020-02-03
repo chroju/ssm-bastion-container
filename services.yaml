@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ssm-bastion
+  labels:
+    k8s-app: ssm-bastion
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: ssm-bastion
+  template:
+    metadata:
+      labels:
+        name: ssm-bastion
+    spec:
+      hostNetwork: true
+      containers:
+      - image: chroju/ssm-bastion:v0.0.1
+        name: ssm-bastion
+        securityContext:
+          runAsUser: 0
+        env:
+        - name: SSM_AGENT_CODE
+          value: YOUR_CODE
+        - name: SSM_AGENT_ID
+          value: YOUR_ID
